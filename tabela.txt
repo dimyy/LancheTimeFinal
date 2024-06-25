@@ -1,0 +1,48 @@
+-- Tabela carrinho
+CREATE TABLE carrinho (
+    id int(11) AUTO_INCREMENT PRIMARY KEY,
+    usuario_id int(11),
+    produto_id int(11),
+    quantidade int(11),
+    FOREIGN KEY (usuario_id) REFERENCES users(id),
+    FOREIGN KEY (produto_id) REFERENCES produtos(id)
+);
+
+-- Tabela estoque
+CREATE TABLE estoque (
+    id int(11) AUTO_INCREMENT PRIMARY KEY,
+    nome varchar(255),
+    tipo enum('comida','bebida','doce'),
+    quantidade int(11),
+    preco decimal(10,2),
+    imagem varchar(255)
+);
+
+-- Tabela pedidos
+CREATE TABLE pedidos (
+    id int(11) AUTO_INCREMENT PRIMARY KEY,
+    usuario_id int(11),
+    total decimal(10,2),
+    status varchar(50),
+    data_pedido timestamp,
+    FOREIGN KEY (usuario_id) REFERENCES users(id)
+);
+
+-- Tabela produtos
+CREATE TABLE produtos (
+    id int(11) AUTO_INCREMENT PRIMARY KEY,
+    nome varchar(100),
+    tipo enum('comida','bebida','doce'),
+    data_adicao timestamp
+);
+
+-- Tabela users
+CREATE TABLE users (
+    id int(11) AUTO_INCREMENT PRIMARY KEY,
+    name varchar(100),
+    email varchar(100),
+    password varchar(255),
+    role enum('aluno','funcionario','admin')
+);
+INSERT INTO users (name, email, password, role)
+VALUES ('Administrador', 'adm@gmail.com', '$2y$10$SRsTD.d3GjzlAF9.7b.gMOv9jAkFUI7xEitT0E7rgk9H4mwUzx6Km', 'admin');
