@@ -1,46 +1,50 @@
-Table: carrinho
-Columns:
-id int(11) AI PK 
-usuario_id int(11) 
-produto_id int(11) 
-quantidade int(11)
+-- Tabela 'users'
+CREATE TABLE users (
+    id INT(11) AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100),
+    email VARCHAR(100),
+    password VARCHAR(255),
+    role ENUM('aluno','funcionario','admin')
+);
 
-Table: estoque
-Columns:
-id int(11) AI PK 
-nome varchar(255) 
-tipo enum('comida','bebida','doce') 
-quantidade int(11) 
-preco decimal(10,2) 
-imagem varchar(255) 
-data_adicao timestamp
+-- Tabela 'estoque'
+CREATE TABLE estoque (
+    id INT(11) AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(255),
+    tipo ENUM('comida','bebida','doce'),
+    quantidade INT(11),
+    preco DECIMAL(10,2),
+    imagem VARCHAR(255),
+    data_adicao TIMESTAMP
+);
 
-Table: pedido_itens
-Columns:
-id int(11) AI PK 
-pedido_id int(11) 
-produto_id int(11) 
-quantidade int(11) 
-preco decimal(10,2)
+-- Tabela 'carrinho'
+CREATE TABLE carrinho (
+    id INT(11) AUTO_INCREMENT PRIMARY KEY,
+    usuario_id INT(11),
+    produto_id INT(11),
+    quantidade INT(11),
+    FOREIGN KEY (usuario_id) REFERENCES users(id),
+    FOREIGN KEY (produto_id) REFERENCES estoque(id)
+);
 
-Table: pedidos
-Columns:
-id int(11) AI PK 
-usuario_id int(11) 
-total decimal(10,2) 
-status varchar(50) 
-data_pedido timestamp
+-- Tabela 'pedidos'
+CREATE TABLE pedidos (
+    id INT(11) AUTO_INCREMENT PRIMARY KEY,
+    usuario_id INT(11),
+    total DECIMAL(10,2),
+    status VARCHAR(50),
+    data_pedido TIMESTAMP,
+    FOREIGN KEY (usuario_id) REFERENCES users(id)
+);
 
-Table: users
-Columns:
-id int(11) AI PK 
-name varchar(100) 
-email varchar(100) 
-password varchar(255) 
-role enum('aluno','funcionario','admin')
-
-
-SET FOREIGN_KEY_CHECKS = 0;
-
-INSERT INTO users (name, email, password, role)
-VALUES ('Administrador', 'adm@gmail.com', '$2y$10$SRsTD.d3GjzlAF9.7b.gMOv9jAkFUI7xEitT0E7rgk9H4mwUzx6Km', 'admin');
+-- Tabela 'pedido_itens'
+CREATE TABLE pedido_itens (
+    id INT(11) AUTO_INCREMENT PRIMARY KEY,
+    pedido_id INT(11),
+    produto_id INT(11),
+    quantidade INT(11),
+    preco DECIMAL(10,2),
+    FOREIGN KEY (pedido_id) REFERENCES pedidos(id),
+    FOREIGN KEY (produto_id) REFERENCES estoque(id)
+);
