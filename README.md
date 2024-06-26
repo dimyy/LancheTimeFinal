@@ -48,3 +48,5 @@ CREATE TABLE pedido_itens (
     FOREIGN KEY (pedido_id) REFERENCES pedidos(id),
     FOREIGN KEY (produto_id) REFERENCES estoque(id)
 );
+INSERT INTO users (name, email, password, role)
+VALUES ('Administrador', 'adm@gmail.com', '$2y$10$SRsTD.d3GjzlAF9.7b.gMOv9jAkFUI7xEitT0E7rgk9H4mwUzx6Km', 'admin');
